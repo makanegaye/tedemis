@@ -1,0 +1,77 @@
+<?php
+$title = 'My shopping list';
+$this->headTitle($title);
+
+$url_order = 'ASC';  // the following lines
+if ($order_by == 'date')
+    $url_order = $order == 'ASC' ? 'DESC' : 'ASC';
+elseif ($order_by == 'product_name')
+    $url_order = $order == 'ASC' ? 'DESC' : 'ASC';
+elseif ($order_by == 'quantity')
+    $url_order = $order == 'ASC' ? 'DESC' : 'ASC';
+elseif ($order_by == 'bought')
+    $url_order = $order == 'ASC' ? 'DESC' : 'ASC';
+?>
+
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<p>
+    <a href="<?php echo $this->url('shoppinglist', array('action'=>'add'));?>">Add a product</a>
+</p>
+<div id="btn-table">
+<span class="disabled" id="btn-edit"><?php echo $this->translate("Edit") ;?></span>&nbsp;&nbsp;
+<span class="disabled" id="btn-remove"><?php echo $this->translate("Remove") ;?></span>&nbsp;&nbsp;
+<span class="disabled" id="btn-bought"><?php echo $this->translate("Set as bought") ;?></span>&nbsp;&nbsp;
+</div>
+<table class="table">
+    <tr>
+        <th>&nbsp;</th>
+        <th>
+            <a href="<?php echo $this->url('shoppinglist', array('action'=>'day', 'order_by' => 'product_name', 'order' => $url_order)); ?>">
+                <?php echo $this->translate("Product name");?> <?php if ($order_by == 'product_name'): ?><i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i><?php endif; ?>
+            </a>       
+        </th>
+        <th>
+            <a href="<?php echo $this->url('shoppinglist', array('action'=>'day', 'order_by' => 'quantity', 'order' => $url_order)); ?>">
+                <?php echo $this->translate("Quantity");?> <?php if ($order_by == 'quantity'): ?><i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i><?php endif; ?>
+            </a>
+        </th>
+        <th>
+            <a href="<?php echo $this->url('shoppinglist', array('action'=>'day', 'order_by' => 'date', 'order' => $url_order)); ?>">
+                <?php echo $this->translate("Date");?> <?php if ($order_by == 'date'): ?><i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i><?php endif; ?>
+            </a>
+        </th>
+        <th>
+            <a href="<?php echo $this->url('shoppinglist', array('action'=>'day', 'order_by' => 'b_bought', 'order' => $url_order)); ?>">
+                <?php echo $this->translate("Bought");?> <?php if ($order_by == 'b_bought'): ?><i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i><?php endif; ?>
+            </a>
+        </th>
+    </tr>
+    <?php 
+    if(count($paginator) == 0) {
+        echo "<tr><td colspan='5'><center>List Empty</center></td></tr>";
+    } else {
+        foreach($paginator as $ShoppingList) { ?>
+        <?php 
+            if($ShoppingList->isBought()) {
+                $class = "bought";
+            } else {
+                $class = "";
+            }
+        ?>
+        <tr class="<?php echo $class; ?>" id='line-<?php echo $ShoppingList->id_shopping_list?>'>
+            <td><input onclick='checkSelection();' class='entity-check' type='checkbox' id='entity-<?php echo $ShoppingList->id_shopping_list?>' name='entity-<?php echo $ShoppingList->id_shopping_list?>' /></td>
+            <td><?php echo $this->escapeHtml($ShoppingList->product_name);?></td>
+            <td><?php echo $this->escapeHtml($ShoppingList->quantity);?></td>
+            <td><?php echo $this->escapeHtml($ShoppingList->date);?></td>
+            <td><?php echo $ShoppingList->isBought() ? "Yes": "No";?></td>
+        </tr>
+    <?php 
+        } 
+    }
+    ?>
+</table>
+<?php
+echo $this->paginationControl(
+            $paginator, 'Sliding', 'paginator-slide-shoppinglist', array('order_by' => $order_by, 'order' => $order)
+    );
+echo $this->headScript()->appendFile($this->basePath() . '/js/shoppinglist.js');

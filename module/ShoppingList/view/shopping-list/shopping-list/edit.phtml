@@ -1,0 +1,44 @@
+<?php
+$title = 'Edit product';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<?php
+$form = $this->form;
+$form->setAttribute('action',
+    $this->url('shoppinglist', array('action' => 'edit', 'id'=> $this->id_shopping_list)));
+echo $this->form()->openTag($form);
+?>
+<dl class="zend_form">
+    <?php echo $this->formInput($form->get('id_shopping_list')); ?>
+    <dt><?php echo $this->formLabel($form->get('id_category')); ?></dt>
+    <dd><?php
+        echo $this->formSelect($form->get('id_category'));
+        echo $this->formElementErrors($form->get('id_category'));
+        ?></dd>
+    <dt><?php echo $this->formLabel($form->get('product_name')); ?></dt>
+    <dd><?php
+        echo $this->formInput($form->get('product_name'));
+        echo $this->formElementErrors($form->get('product_name'));
+        ?></dd>
+    <dt><?php echo $this->formLabel($form->get('quantity')); ?></dt>
+    <dd><?php
+        echo $this->formInput($form->get('quantity'));
+        echo $this->formElementErrors($form->get('quantity'));
+        ?></dd>
+    <dt><?php echo $this->formLabel($form->get('date')); ?></dt>
+    <dd><?php
+        echo $this->formInput($form->get('date'));
+        echo $this->formElementErrors($form->get('date'));
+        ?></dd>
+    <dt><?php echo $this->formLabel($form->get('b_bought')); ?></dt>
+    <dd><?php
+        echo $this->formSelect($form->get('b_bought'));
+        echo $this->formElementErrors($form->get('b_bought'));
+        ?></dd>
+    <dd><?php
+        echo $this->formInput($form->get('submit'));
+        echo $this->formElementErrors($form->get('submit'));
+        ?></dd>
+</dl>
+<?php echo $this->form()->closeTag($form); ?>

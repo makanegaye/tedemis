@@ -1,0 +1,20 @@
+<?php
+$title = 'Deleting category';
+$this->headTitle($title);
+?>
+
+<h1><?php echo $this->escapeHTML($title); ?></h1>
+
+<p>Do you realy want to remove category:
+    '<?php echo $this->escapeHTML($category->name); ?>' ?
+</p>
+
+<?php
+$url = $this->url('category', array('action' => 'delete', 'id' => $category->id_category)); ?>
+<form action="<?php echo $url; ?>" method="post">
+    <div>
+        <input type="hidden" name="id" value="<?php echo (int)$category->id_category; ?>" />
+        <input type="submit" name="del" value="Oui" />
+        <input type="submit" name="del" value="Non" />
+    </div>
+</form>

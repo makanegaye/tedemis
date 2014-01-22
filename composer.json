@@ -1,0 +1,28 @@
+{
+    "name": "zendframework/skeleton-application",
+    "description": "Skeleton Application for ZF2",
+    "license": "BSD-3-Clause",
+    "keywords": [
+        "framework",
+        "zf2"
+    ],
+    "homepage": "http://framework.zend.com/",
+    "require": {
+        "php": ">=5.3.3",
+        "zendframework/zendframework": ">2.1.3"
+    },
+    "require-dev": {
+        "doctrine/common": ">=2.1",
+        "ircmaxell/random-lib": "dev-master",
+        "ircmaxell/security-lib": "dev-master",
+        "phpunit/PHPUnit": "3.7.*"
+    },
+    "suggest": {
+        "doctrine/common": "Doctrine\\Common >=2.1 for annotation features",
+        "ext-intl": "ext/intl for i18n features",
+        "ircmaxell/random-lib": "Fallback random byte generator for Zend\\Math\\Rand if OpenSSL/Mcrypt extensions are unavailable",
+        "pecl-weakref": "Implementation of weak references for Zend\\Stdlib\\CallbackHandler",
+        "zendframework/zendpdf": "ZendPdf for creating PDF representations of barcodes",
+        "zendframework/zendservice-recaptcha": "ZendService\\ReCaptcha for rendering ReCaptchas in Zend\\Captcha and/or Zend\\Form"
+    }
+}
